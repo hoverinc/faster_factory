@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-require "faster_factory"
+require 'faster_factory'
+
+FasterFactory::CLI.start ARGV

@@ -50,21 +50,28 @@ throw them away, or use `git bisect` to find the first bad commit.
 
 Work in progress:
 
+Display `Faster Factory` help options.
+
+`faster_factory`
+`faster_factory help`
+`faster_factory -h`
+`faster_factory --help`
+
 Run `Faster Factory` on all files in `spec/` or `test/`,
 auto-correcting and committing the changes that succeed.
-`faster_factory`
+`faster_factory run`
 
 Run `Faster Factory` on all files on only specified folder or files,
 auto-correcting and committing the changes that succeed.
 
-`faster_factory -f path/to/folder/or/file`
+`faster_factory run -f path/to/folder/or/file`
 
 Run `Faster Factory` with a custom git commit message.
 The default commit message are:
   - `[TCR] Replace FactoryBot.create with FactoryBot.build in {{file}}`
   - `[TCR] Replace FactoryBot.build with FactoryBot.build_stubbed in {{file}}`
 
-`faster_factory --message "Makes {{file}} tests run faaaaster"`
+`faster_factory run --message "Makes {{file}} tests run faaaaster"`
 
 Run `Faster Factory` with a different test strategy.
 By default, `Faster Factory` only runs the localized test around the change.
@@ -73,21 +80,21 @@ Eg, `rspec spec/user_spec.rb:37`, if the change is on line `37`
 If you prefer to run more tests with each change, you can.
 Options are: `line`, `file`, `all`.
 
-`faster_factory --strategy file`
+`faster_factory run --strategy file`
 
 You can combine strategies with a comma to try one first, then double check with something larger.
 Eg, `line,file` will run `rspec spec/user_spec.rb:37`, then if it passes `rspec spec/user_spec.rb`.
 Eg, `line,all` will run `rspec spec/user_spec.rb:37`, then if it passes `rspec`.
 
-`faster_factory --strategy file,all`
+`faster_factory run --strategy file,all`
 
 Run `Faster Factory` without committing successful changes to git.
 
-`faster_factory --no-git`
+`faster_factory run --no-git`
 
 Run `Faster Factory` without keeping changes. Instead, generate a report of successful changes.
 
-`faster_factory --dry-run`
+`faster_factory run --dry-run`
 
 ## Development
 

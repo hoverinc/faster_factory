@@ -1,41 +1,39 @@
 require 'optparse'
 
-Options = Struct.new(:name)
+Options = Struct.new(:name, :dry_run, :no_git, :message, :strategy)
 
 module FasterFactory
   class CLI
     def self.start options
       args = Options.new('world')
 
-      opt_parser = OptionParser.new do |opts|
+      option_parser = OptionParser.new do |opts|
         opts.banner = 'Usage: faster_factory [command] [path/to/folder/or/file] [options]'
 
-        opts.on('--dry-run', 'Prints report instead of keeping any changes') do
+        opts.on('--dry-run', 'Prints report instead of keeping any changes') do |dr|
+          args.dry_run = dr
+        end
+
+        opts.on('--no-git', 'Runs without committing successful changes') do |ng|
+          args.no_git = ng
+        end
+
+        opts.on('-h', '--help', 'Displays this help text') do
           puts opts
           exit
         end
 
-        opts.on('--no-git', 'Runs without committing successful changes') do
-          puts opts
-          exit
-        end
-
-        opts.on('help', '-h', '--help', 'Displays this help') do
-          puts opts
-          exit
-        end
-
-        opts.on('-mMESSAGE', '--message=MESSAGE', 'Custom commit message, can use {{file}} for file name') do |m|
+        opts.on('-mMESSAGE', '--message=MESSAGE', 'Sets a custom message for each git commit', 'It can include {{file}} for file name') do |m|
           args.message = m
         end
 
-        opts.on('-sSTRATEGY', '--strategy=STRATEGY', 'Test strategy: line file all line,file file,all line,file,all') do |s|
+        opts.on('-sSTRATEGY', '--strategy=STRATEGY', 'Sets the test strategy: line|file|all', 'You can combine strategies for extra checks:', 'line,file|line,all|file,all|line,file,all') do |s|
           args.strategy = s
         end
       end
 
-      opt_parser.parse!(options)
-      return args
+      option_parser.parse! options
+      puts args
     end
   end
 end

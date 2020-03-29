@@ -64,7 +64,7 @@ auto-correcting and committing the changes that succeed.
 Run `Faster Factory` on all files on only specified folder or files,
 auto-correcting and committing the changes that succeed.
 
-`faster_factory run -f path/to/folder/or/file`
+`faster_factory run path/to/folder/or/file`
 
 Run `Faster Factory` with a custom git commit message.
 The default commit message are:

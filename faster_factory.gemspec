@@ -10,10 +10,12 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Make FactoryBot factories go faster"
   spec.description   = <<~DESCRIPTION
-    Finds and replaces FactoryBot factories in tests with faster methods.
-    Prefers .build_stubbed over .build over .create.
-    Changes one at a time, run the localized test for that change.
-    If it passes, commits it. If it fails reverts it.
+    FasterFactory finds FactoryBot factories and replaces them with faster methods.
+    It prefers FactoryBot.build_stubbed over FactoryBot.build over FactoryBot.create.
+    It doesn't change your tests in any other way.
+    It changes one occurrence at a time, then runs the localized test for that change.
+    If the tests pass, it commits the change.
+    If they fails, it reverts the change.
   DESCRIPTION
 
   spec.homepage      = "https://github.com/hoverinc/faster_factory"

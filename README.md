@@ -1,12 +1,17 @@
-# FasterFactory
+# Faster Factory
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/faster_factory`. To experiment with that code, run `bin/console` for an interactive prompt.
+_Make FactoryBot factories go faster_
 
-TODO: Delete this and the text above, and describe your gem
+`FasterFactory` finds `FactoryBot` factories and replaces them with faster methods.
+It prefers `FactoryBot.build_stubbed` over `FactoryBot.build` over `FactoryBot.create`.
+It doesn't change your tests in any other way.
+It changes one occurrence at a time, then runs the localized test for that change.
+If the tests pass, it commits the change.
+If they fails, it reverts the change.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's `Gemfile`:
 
 ```ruby
 gem 'faster_factory'
@@ -14,11 +19,15 @@ gem 'faster_factory'
 
 And then execute:
 
-    $ bundle
+```
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install faster_factory
+```
+gem install faster_factory
+```
 
 ## Usage
 

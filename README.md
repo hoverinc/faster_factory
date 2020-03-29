@@ -9,6 +9,8 @@ It changes one occurrence at a time, then runs the localized test for that chang
 If the tests pass, it commits the change.
 If they fails, it reverts the change.
 
+Largely inspired by [factory_faster](https://github.com/livingsocial/factory_faster) by [Tom Copeland](https://github.com/tcopeland).
+
 ## Installation
 
 Add this line to your application's `Gemfile`:

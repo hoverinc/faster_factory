@@ -1,0 +1,1 @@
+# FasterFactory Changelog

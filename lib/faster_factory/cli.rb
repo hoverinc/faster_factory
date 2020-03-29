@@ -1,11 +1,9 @@
 require 'optparse'
 
-Options = Struct.new(:name, :dry_run, :no_git, :message, :strategy)
-
 module FasterFactory
   class CLI
     def self.start options
-      args = Options.new('world')
+      args = FasterFactory::Options.new
 
       option_parser = OptionParser.new do |opts|
         opts.banner = 'Usage: faster_factory [command] [path/to/folder/or/file] [options]'
@@ -33,7 +31,7 @@ module FasterFactory
       end
 
       option_parser.parse! options
-      puts args
+      args
     end
   end
 end

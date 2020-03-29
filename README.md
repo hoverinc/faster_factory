@@ -2,7 +2,7 @@
 
 _Make FactoryBot factories go faster_
 
-`Faster Factory` finds `FactoryBot` factories and replaces them with faster methods.
+_Faster Factory_ finds `FactoryBot` factories and replaces them with faster methods.
 It prefers `FactoryBot.build_stubbed` over `FactoryBot.build` over `FactoryBot.create`.
 It doesn't change your tests in any other way.
 It changes one occurrence at a time, then runs the localized test for that change.
@@ -35,11 +35,11 @@ gem install faster_factory
 
 **Highly encouraged requirement:** `git`
 
-`Faster Factory` uses the `test && commit || revert` (TCR) methodology
+_Faster Factory_ uses the `test && commit || revert` (TCR) methodology
 for trying a small change, running the tests, then keeping the change if the tests pass,
 or throwing the change away if the tests fail/error.
 
-Because of this, it really works best to use `Faster Factory` in the context of a git repository.
+Because of this, it really works best to use _Faster Factory_ in the context of a git repository.
 
 **Highly encouraged:** only use this on a feature/topic branch, not `master`.
 
@@ -50,7 +50,7 @@ throw them away, or use `git bisect` to find the first bad commit.
 
 Work in progress:
 
-Display `Faster Factory` help options.
+Display _Faster Factory_ help options.
 
 ```
 faster_factory
@@ -59,21 +59,21 @@ faster_factory -h
 faster_factory --help
 ```
 
-Run `Faster Factory` on all files in `spec/` or `test/`,
+Run _Faster Factory_ on all files in `spec/` or `test/`,
 auto-correcting and committing the changes that succeed.
 
 ```
 faster_factory run
 ```
 
-Run `Faster Factory` on all files on only specified folder or files,
+Run _Faster Factory_ on all files on only specified folder or files,
 auto-correcting and committing the changes that succeed.
 
 ```
 faster_factory run path/to/folder/or/file
 ```
 
-Run `Faster Factory` with a custom git commit message.
+Run _Faster Factory_ with a custom git commit message.
 The default commit message are:
 
 - `[TCR] Replace FactoryBot.create with FactoryBot.build in {{file}}`
@@ -83,8 +83,8 @@ The default commit message are:
 faster_factory run --message "Makes {{file}} tests run faaaaster"
 ```
 
-Run `Faster Factory` with a different test strategy.
-By default, `Faster Factory` only runs the localized test around the change.
+Run _Faster Factory_ with a different test strategy.
+By default, _Faster Factory_ only runs the localized test around the change.
 Eg, `rspec spec/user_spec.rb:37`, if the change is on line `37`
 
 If you prefer to run more tests with each change, you can.
@@ -102,13 +102,13 @@ Eg, `line,all` will run `rspec spec/user_spec.rb:37`, then if it passes `rspec`.
 faster_factory run --strategy file,all
 ```
 
-Run `Faster Factory` without committing successful changes to git.
+Run _Faster Factory_ without committing successful changes to git.
 
 ```
 faster_factory run --no-git
 ```
 
-Run `Faster Factory` without keeping changes. Instead, generate a report of successful changes.
+Run _Faster Factory_ without keeping changes. Instead, generate a report of successful changes.
 
 ```
 faster_factory run --dry-run

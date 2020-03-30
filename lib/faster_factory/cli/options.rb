@@ -4,8 +4,8 @@ module FasterFactory
       attr_accessor :dry_run, :no_git, :message, :strategies
 
       def initialize options
-        option_parser.parse! options
-        self
+        @options = options
+        setup!
       end
 
       def dry_run?
@@ -17,6 +17,11 @@ module FasterFactory
       end
 
       private
+
+      def setup!
+        option_parser.parse! @options
+        self
+      end
 
       def option_parser
         OptionParser.new do |opts|

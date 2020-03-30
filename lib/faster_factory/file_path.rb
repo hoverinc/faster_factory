@@ -4,7 +4,12 @@ module FasterFactory
 
     def initialize path
       @path = path
+      setup!
+    end
 
+    private
+
+    def setup!
       validate_path_not_option!
       return self if @path.nil?
 
@@ -12,8 +17,6 @@ module FasterFactory
       validate_file_exists!
       self
     end
-
-    private
 
     def validate_path_not_option!
       @path = nil if @path.start_with? '-'

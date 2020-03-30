@@ -7,15 +7,18 @@ module FasterFactory
 
       def initialize files
         @files_arg = files
+        setup!
+      end
 
+      private
+
+      def setup!
         fallback_to_default_directories!
         expand_paths!
         expand_directories!
 
         self
       end
-
-      private
 
       def fallback_to_default_directories!
         @files_arg = %w[spec test] if @files_arg.empty?

@@ -1,3 +1,5 @@
+require 'faster_factory/file_path'
+
 module FasterFactory
   module CLI
     class Files
@@ -12,22 +14,11 @@ module FasterFactory
       private
 
       def parse! files
-        @paths = Array(provided_or_default).flatten
+        @paths = provided_paths_or_default_paths.flatten
       end
 
-      def provided_or_default
+      def provided_paths_or_default_paths
         @files_arg.first.start_with?('-') ? test_or_spec : paths_from_args
-      end
-
-      def paths_from_args
-        files_paths = []
-
-        @files_arg.each do |arg|
-          break if arg.start_with?('-')
-          files_paths << arg
-        end
-
-        files_paths
       end
 
       def test_or_spec
@@ -35,6 +26,18 @@ module FasterFactory
         test_dirs << 'spec' if Dir.exist? './spec'
         test_dirs << 'test' if Dir.exist? './test'
         test_dirs
+      end
+
+      def paths_from_args
+        file_paths = []
+
+        @files_arg.each do |file_arg|
+          break if file_arg.start_with?('-')
+
+          file_paths << FasterFactory::FilePath.new(file_arg).path
+        end
+
+        file_paths.compact
       end
     end
   end

@@ -3,8 +3,6 @@ module FasterFactory
     class Command
       attr_accessor :name
 
-      ALLOWED_COMMANDS = %w[help run]
-
       class << self
         def parse args
           FasterFactory::CLI::Command.new args
@@ -18,8 +16,12 @@ module FasterFactory
 
       private
 
+      def allowed_commands
+        %w[help run].map(&:freeze).freeze
+      end
+
       def parse! args
-        @name = args.first if ALLOWED_COMMANDS.include?(args.first)
+        @name = args.first if allowed_commands.include?(args.first)
       end
     end
   end

@@ -7,37 +7,25 @@ module FasterFactory
 
       def initialize files
         @files_arg = files
-        parse! files
+
+        fallback_to_default_directories!
+        expand_paths!
+
         self
       end
 
       private
 
-      def parse! files
-        @paths = provided_paths_or_default_paths.flatten
+      def fallback_to_default_directories!
+        @files_arg = %w[spec test] if @files_arg.empty?
       end
 
-      def provided_paths_or_default_paths
-        @files_arg.first.start_with?('-') ? test_or_spec : paths_from_args
+      def expand_paths!
+        @paths = @files_arg.map { |file_arg| file_path_for(file_arg) }.compact
       end
 
-      def test_or_spec
-        test_dirs = []
-        test_dirs << 'spec' if Dir.exist? './spec'
-        test_dirs << 'test' if Dir.exist? './test'
-        test_dirs
-      end
-
-      def paths_from_args
-        file_paths = []
-
-        @files_arg.each do |file_arg|
-          break if file_arg.start_with?('-')
-
-          file_paths << FasterFactory::FilePath.new(file_arg).path
-        end
-
-        file_paths.compact
+      def file_path_for file_arg
+        FasterFactory::FilePath.new(file_arg).path
       end
     end
   end

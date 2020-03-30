@@ -1,5 +1,4 @@
 require 'faster_factory/version'
-require 'faster_factory/options'
 require 'faster_factory/command_line_interface'
 
 module FasterFactory

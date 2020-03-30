@@ -10,6 +10,7 @@ module FasterFactory
 
         fallback_to_default_directories!
         expand_paths!
+        expand_directories!
 
         self
       end
@@ -26,6 +27,20 @@ module FasterFactory
 
       def file_path_for file_arg
         FasterFactory::FilePath.new(file_arg).path
+      end
+
+      def expand_directories!
+        expanded_directories = []
+
+        @paths.each do |path|
+          expanded_directories << if File.file?(path)
+                                    path
+                                  else
+                                    Dir.glob("#{path}/**/*.rb")
+                                  end
+        end
+
+        @paths = expanded_directories.flatten.compact
       end
     end
   end

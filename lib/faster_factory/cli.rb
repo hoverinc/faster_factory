@@ -3,8 +3,8 @@ require 'optparse'
 module FasterFactory
   class CLI
     class << self
-      def start options
-        options = FasterFactory::Options.parse options
+      def start cli_args
+        options = FasterFactory::Options.parse cli_args
         # commands = FasterFactory::Commands.parse(options)
 
         puts options.inspect

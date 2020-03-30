@@ -14,6 +14,14 @@ module FasterFactory
         self
       end
 
+      def dry_run?
+        !!@dry_run
+      end
+
+      def no_git?
+        !!@no_git
+      end
+
       private
 
       def option_parser

@@ -1,7 +1,7 @@
 module FasterFactory
   module CLI
     class Options
-      attr_accessor :dry_run, :no_git, :message, :strategy
+      attr_accessor :dry_run, :no_git, :message, :strategies
 
       class << self
         def parse options
@@ -46,7 +46,7 @@ module FasterFactory
           end
 
           opts.on('-sSTRATEGY', '--strategy=STRATEGY', Array, 'Sets the test strategy: line|file|all', 'You can combine strategies for extra checks:', 'line,file|line,all|file,all|line,file,all') do |s|
-            @strategy = s
+            @strategies = s
           end
         end
       end

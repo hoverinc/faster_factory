@@ -6,8 +6,8 @@ module FasterFactory
   class CommandLineInterface
     class << self
       def start cli_args
-        options = FasterFactory::CLI::Options.parse cli_args
-        command = FasterFactory::CLI::Command.parse cli_args
+        command = FasterFactory::CLI::Command.new cli_args.shift
+        options = FasterFactory::CLI::Options.new cli_args
         files   = [] # FasterFactory::Files.parse cli_args
 
         puts "Options:"

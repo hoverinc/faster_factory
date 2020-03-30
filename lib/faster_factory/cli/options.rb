@@ -3,12 +3,6 @@ module FasterFactory
     class Options
       attr_accessor :dry_run, :no_git, :message, :strategies
 
-      class << self
-        def parse options
-          FasterFactory::CLI::Options.new options
-        end
-      end
-
       def initialize options
         option_parser.parse! options
         self

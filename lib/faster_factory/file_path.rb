@@ -17,8 +17,7 @@ module FasterFactory
     end
 
     def expand_path
-      @path
+      @path = File.expand_path(@path, FileUtils.pwd)
     end
-
   end
 end

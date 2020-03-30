@@ -2,4 +2,4 @@
 
 require 'faster_factory'
 
-FasterFactory::CLI.start ARGV
+FasterFactory::CommandLineInterface.start ARGV

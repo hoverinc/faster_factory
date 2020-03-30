@@ -1,7 +1,7 @@
 require 'optparse'
 
 module FasterFactory
-  class CLI
+  class CommandLineInterface
     class << self
       def start cli_args
         options = FasterFactory::Options.parse cli_args

@@ -16,7 +16,18 @@ module FasterFactory
       end
 
       def provided_or_default
-        @files_arg.start_with?('-') ? test_or_spec : @files_arg
+        @files_arg.first.start_with?('-') ? test_or_spec : paths_from_args
+      end
+
+      def paths_from_args
+        files_paths = []
+
+        @files_arg.each do |arg|
+          break if arg.start_with?('-')
+          files_paths << arg
+        end
+
+        files_paths
       end
 
       def test_or_spec

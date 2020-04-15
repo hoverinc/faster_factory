@@ -25,7 +25,16 @@ module FasterFactory
 
       def option_parser
         OptionParser.new do |opts|
-          opts.banner = 'Usage: faster_factory [command] [path/to/folder/or/file] [options]'
+          opts.banner = <<~BANNER
+
+            Faster Factory finds FactoryBot factories and replaces them with faster methods.
+              Prefers .build_stubbed over .build over .create.
+              Defaults to using spec/ or test/ directories.
+
+            Usage: faster_factory [options] [path/to/folder/or/file]
+
+            Options:
+          BANNER
 
           opts.on('--dry-run', TrueClass, 'Prints report instead of keeping any changes') do |dr|
             @dry_run = dr

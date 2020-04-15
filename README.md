@@ -1,3 +1,4 @@
+# WORK IN PROGRESS
 # Faster Factory
 
 _Make FactoryBot factories go faster_
@@ -53,7 +54,6 @@ Work in progress:
 Display _Faster Factory_ help options.
 
 ```
-faster_factory
 faster_factory help
 faster_factory -h
 faster_factory --help
@@ -63,14 +63,14 @@ Run _Faster Factory_ on all files in `spec/` or `test/`,
 auto-correcting and committing the changes that succeed.
 
 ```
-faster_factory run
+faster_factory
 ```
 
 Run _Faster Factory_ on all files on only specified folder or files,
 auto-correcting and committing the changes that succeed.
 
 ```
-faster_factory run path/to/folder/or/file
+faster_factory path/to/folder/or/file
 ```
 
 Run _Faster Factory_ with a custom git commit message.
@@ -80,7 +80,7 @@ The default commit message are:
 - `[TCR] Replace FactoryBot.build with FactoryBot.build_stubbed in {{file}}`
 
 ```
-faster_factory run --message "Makes {{file}} tests run faaaaster"
+faster_factory --message "Makes {{file}} tests run faaaaster"
 ```
 
 Run _Faster Factory_ with a different test strategy.
@@ -91,7 +91,7 @@ If you prefer to run more tests with each change, you can.
 Options are: `line`, `file`, `all`.
 
 ```
-faster_factory run --strategy file
+faster_factory --strategy file
 ```
 
 You can combine strategies with a comma to try one first, then double check with something larger.
@@ -99,19 +99,19 @@ Eg, `line,file` will run `rspec spec/user_spec.rb:37`, then if it passes `rspec 
 Eg, `line,all` will run `rspec spec/user_spec.rb:37`, then if it passes `rspec`.
 
 ```
-faster_factory run --strategy file,all
+faster_factory --strategy file,all
 ```
 
 Run _Faster Factory_ without committing successful changes to git.
 
 ```
-faster_factory run --no-git
+faster_factory --no-git
 ```
 
 Run _Faster Factory_ without keeping changes. Instead, generate a report of successful changes.
 
 ```
-faster_factory run --dry-run
+faster_factory --dry-run
 ```
 
 ## Development

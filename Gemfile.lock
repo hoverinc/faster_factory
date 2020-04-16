@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    faster_factory (0.1.0)
+    faster_factory (0.1.1)
 
 GEM
   remote: https://rubygems.org/

@@ -44,14 +44,16 @@ module FasterFactory
           lines.each_with_index do |line, index|
             unless line[:build_present].nil?
               puts "'FactoryBot.create' found on line: #{index + 1}"
-              line[:new_content] = line[:original_content].sub('FactoryBot.build', 'FactoryBot.create')
-              puts "Replaced 'FactoryBot.create' with 'FactoryBot.build'"
+              line[:new_content] = line[:original_content].sub('FactoryBot.create', 'FactoryBot.build')
+              puts "Replaced 'FactoryBot.build' with 'FactoryBot.create'"
 
               content = lines.map { |l| l[:new_content] || l[:original_content] }.join
 
               File.write(path, content)
               puts "*"*80
-              rspec_output = `bundle exec rspec #{path}:#{index + 1}`
+              puts "Running RSpec"
+              rspec_command = "bundle exec rspec #{path}:#{index + 1}"
+              rspec_output = `#{rspec_command}`
               puts "*"*80
 
               if rspec_output =~ /Failures:/

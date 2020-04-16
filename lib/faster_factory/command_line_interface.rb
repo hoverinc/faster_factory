@@ -7,13 +7,13 @@ module FasterFactory
     def initialize cli_args
       # Special case for `faster_factory help`:
       # Avoid running on spec/ or test/ when asked for help text
-      cli_args = ['-h'] if cli_args.first == 'help'
+      @cli_args = ['-h'] if @cli_args.first == 'help'
 
       # Parse CLI options
-      @options = FasterFactory::CLI::Options.new cli_args
+      @options = FasterFactory::CLI::Options.new @cli_args
 
       # Build list of files to work on
-      @files = FasterFactory::CLI::Files.new cli_args
+      @files = FasterFactory::CLI::Files.new @cli_args
     end
 
     def start

@@ -9,7 +9,7 @@ RSpec.describe FasterFactory::Line do
   end
 
   describe "#original_content" do
-    it "sets #original_content from the content initialization argument" do
+    it "sets #original_content from the initialization argument" do
       line_content = "let(:user) { FactoryGirl.build(:user) }"
       subject = FasterFactory::Line.new(line_content).original_content
 
@@ -18,7 +18,7 @@ RSpec.describe FasterFactory::Line do
   end
 
   describe "#content" do
-    it "sets #content from the content initialization argument" do
+    it "sets #content from the initialization argument" do
       line_content = "let(:user) { FactoryGirl.build(:user) }"
       subject = FasterFactory::Line.new(line_content).content
 
@@ -27,14 +27,14 @@ RSpec.describe FasterFactory::Line do
   end
 
   describe "#build_present?" do
-    it "knows that .build is in its content" do
+    it "knows that .build is in its #content" do
       line_with_build = "let(:user) { FactoryGirl.build(:user) }"
       subject = FasterFactory::Line.new(line_with_build).build_present?
 
       expect(subject).to eq true
     end
 
-    it "knows that .build is not in its content" do
+    it "knows that .build is not in its #content" do
       line_without_build = "let(:user) { FactoryGirl.create(:user) }"
       subject = FasterFactory::Line.new(line_without_build).build_present?
 
@@ -43,14 +43,14 @@ RSpec.describe FasterFactory::Line do
   end
 
   describe "#create_present?" do
-    it "knows that .create is in its content" do
+    it "knows that .create is in its #content" do
       line_with_create = "let(:user) { FactoryBot.create(:user) }"
       subject = FasterFactory::Line.new(line_with_create).create_present?
 
       expect(subject).to eq true
     end
 
-    it "knows that .create is not in its content" do
+    it "knows that .create is not in its #content" do
       line_without_create = "let(:user) { FactoryBot.build(:user) }"
       subject = FasterFactory::Line.new(line_without_create).create_present?
 

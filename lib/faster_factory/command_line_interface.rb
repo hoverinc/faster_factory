@@ -4,6 +4,12 @@ require 'faster_factory/cli/files'
 
 module FasterFactory
   class CommandLineInterface
+    class << self
+      def for cli_args
+        FasterFactory::CommandLineInterface.new(cli_args).start
+      end
+    end
+
     def initialize cli_args
       # Special case for `faster_factory help`:
       # Avoid running on spec/ or test/ when asked for help text

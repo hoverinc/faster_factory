@@ -1,7 +1,10 @@
 module FasterFactory
   class Line
+    attr_reader :original_content
+
     def initialize content
-      @content = content
+      @content          = content
+      @original_content = content
     end
 
     def create_present?

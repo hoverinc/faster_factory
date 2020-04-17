@@ -39,4 +39,13 @@ RSpec.describe FasterFactory::Line do
       expect(subject).to eq false
     end
   end
+
+  describe "#original_content" do
+    it "sets original_content from the content initialization argument" do
+      line_content = "let(:user) { FactoryGirl.build(:user) }"
+      subject = FasterFactory::Line.new(line_content).original_content
+
+      expect(subject).to eq line_content
+    end
+  end
 end

@@ -3,74 +3,73 @@
 
 RSpec.describe FasterFactory::Line do
   it "requires an initialization argument" do
-    subject = FasterFactory::Line.new("asdf")
-
-    expect(subject).not_to be nil
+    line = FasterFactory::Line.new "asdf"
+    expect(line).not_to be nil
   end
 
   describe "#original_content" do
     it "sets #original_content from the initialization argument" do
       line_content = "let(:user) { FactoryGirl.build(:user) }"
-      subject = FasterFactory::Line.new(line_content).original_content
+      line         = FasterFactory::Line.new line_content
 
-      expect(subject).to eq line_content
+      expect(line.original_content).to eq line_content
     end
   end
 
   describe "#content" do
     it "sets #content from the initialization argument" do
       line_content = "let(:user) { FactoryGirl.build(:user) }"
-      subject = FasterFactory::Line.new(line_content).content
+      line = FasterFactory::Line.new line_content
 
-      expect(subject).to eq line_content
+      expect(line.content).to eq line_content
     end
   end
 
   describe "#build_present?" do
     it "knows that '.build' is in its #content" do
       line_with_build = "let(:user) { FactoryGirl.build(:user) }"
-      subject = FasterFactory::Line.new(line_with_build).build_present?
+      line = FasterFactory::Line.new line_with_build
 
-      expect(subject).to eq true
+      expect(line.build_present?).to eq true
     end
 
     it "knows that '.build' is not in its #content" do
       line_without_build = "let(:user) { FactoryGirl.create(:user) }"
-      subject = FasterFactory::Line.new(line_without_build).build_present?
+      line = FasterFactory::Line.new line_without_build
 
-      expect(subject).to eq false
+      expect(line.build_present?).to eq false
     end
   end
 
   describe "#build_stubbed_present?" do
     it "knows that '.build_stubbed' is in its #content" do
       line_with_build_stubbed = "let(:user) { FactoryGirl.build_stubbed(:user) }"
-      subject = FasterFactory::Line.new(line_with_build_stubbed).build_stubbed_present?
+      line                    = FasterFactory::Line.new(line_with_build_stubbed)
 
-      expect(subject).to eq true
+      expect(line.build_stubbed_present?).to eq true
     end
 
     it "knows that '.build_stubbed' is not in its #content" do
       line_without_build_stubbed = "let(:user) { FactoryGirl.create(:user) }"
-      subject = FasterFactory::Line.new(line_without_build_stubbed).build_stubbed_present?
+      line = FasterFactory::Line.new line_without_build_stubbed
 
-      expect(subject).to eq false
+      expect(line.build_stubbed_present?).to eq false
     end
   end
 
   describe "#create_present?" do
     it "knows that '.create' is in its #content" do
       line_with_create = "let(:user) { FactoryBot.create(:user) }"
-      subject = FasterFactory::Line.new(line_with_create).create_present?
+      line = FasterFactory::Line.new line_with_create
 
-      expect(subject).to eq true
+      expect(line.create_present?).to eq true
     end
 
     it "knows that '.create' is not in its #content" do
       line_without_create = "let(:user) { FactoryBot.build(:user) }"
-      subject = FasterFactory::Line.new(line_without_create).create_present?
+      line = FasterFactory::Line.new line_without_create
 
-      expect(subject).to eq false
+      expect(line.create_present?).to eq false
     end
   end
 

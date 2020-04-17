@@ -8,5 +8,10 @@ module FasterFactory
       match = @content =~ %r{\.create}
       !match.nil?
     end
+
+    def build_present?
+      match = @content =~ %r{\.build}
+      !match.nil?
+    end
   end
 end

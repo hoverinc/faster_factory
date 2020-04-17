@@ -8,19 +8,21 @@ RSpec.describe FasterFactory::Line do
     expect(subject).not_to be nil
   end
 
-  describe "#create_present?" do
-    it "knows that .create is in its content" do
-      line_with_create = "let(:user) { FactoryBot.create(:user) }"
-      subject = FasterFactory::Line.new(line_with_create).create_present?
+  describe "#original_content" do
+    it "sets #original_content from the content initialization argument" do
+      line_content = "let(:user) { FactoryGirl.build(:user) }"
+      subject = FasterFactory::Line.new(line_content).original_content
 
-      expect(subject).to eq true
+      expect(subject).to eq line_content
     end
+  end
 
-    it "knows that .create is not in its content" do
-      line_without_create = "let(:user) { FactoryBot.build(:user) }"
-      subject = FasterFactory::Line.new(line_without_create).create_present?
+  describe "#content" do
+    it "sets #content from the content initialization argument" do
+      line_content = "let(:user) { FactoryGirl.build(:user) }"
+      subject = FasterFactory::Line.new(line_content).content
 
-      expect(subject).to eq false
+      expect(subject).to eq line_content
     end
   end
 
@@ -40,12 +42,19 @@ RSpec.describe FasterFactory::Line do
     end
   end
 
-  describe "#original_content" do
-    it "sets #original_content from the content initialization argument" do
-      line_content = "let(:user) { FactoryGirl.build(:user) }"
-      subject = FasterFactory::Line.new(line_content).original_content
+  describe "#create_present?" do
+    it "knows that .create is in its content" do
+      line_with_create = "let(:user) { FactoryBot.create(:user) }"
+      subject = FasterFactory::Line.new(line_with_create).create_present?
 
-      expect(subject).to eq line_content
+      expect(subject).to eq true
+    end
+
+    it "knows that .create is not in its content" do
+      line_without_create = "let(:user) { FactoryBot.build(:user) }"
+      subject = FasterFactory::Line.new(line_without_create).create_present?
+
+      expect(subject).to eq false
     end
   end
 

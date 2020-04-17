@@ -32,10 +32,22 @@ module FasterFactory
         lines.each_with_index do |line, index|
           line_number = index + 1
 
+          # TEMP: un-DRY duplication
+
           if line.create_present?
-            puts "'.create' found on line: #{line_number}"
+            puts "==>   Found '.create' on line: #{line_number}"
+            puts "==>   Replacing '.create' with '.build_stubbed'…"
+            line.replace_create_with_build_stubbed!
+
+            content = lines.map(&:content).join
+
+            tcr! path: path, content: content, line_number: line_number, from: 'create', to: 'build_stubbed'
+          end
+
+          if line.create_present?
+            puts "==>   Found '.create' on line: #{line_number}"
+            puts "==>   Replacing '.create' with '.build'…"
             line.replace_create_with_build!
-            puts "Replaced '.create' with '.build'"
 
             content = lines.map(&:content).join
 
@@ -43,9 +55,9 @@ module FasterFactory
           end
 
           if line.build_present?
-            puts "'.build' found on line: #{line_number}"
+            puts "==>   Found '.build' on line: #{line_number}"
+            puts "==>   Replacing '.build' with '.build_stubbed'…"
             line.replace_build_with_build_stubbed!
-            puts "Replaced '.build' with '.build_stubbed'"
 
             content = lines.map(&:content).join
 
@@ -60,33 +72,31 @@ module FasterFactory
       relative_file_path = path.sub "#{Dir.pwd}/", ''
 
       File.write(path, content)
-      puts "*"*80
-      puts "Running RSpec"
+      puts
+      puts "==> Running Tests…"
       rspec_command = "bundle exec rspec #{path}:#{line_number}"
       rspec_output = `#{rspec_command}`
-      puts "*"*80
 
       if rspec_output =~ /Failures:/
-        puts "SPECS FAILED"
-        puts "Resetting changes back to working state"
+        puts "==>   Tests FAILED"
+        puts "==>   Resetting changes back to previous state using:"
+        puts "==>     git reset --hard"
         `git reset --hard`
-        puts "*"*80
+        puts
       else
-        puts "Success!"
-        puts "On line: #{line_number}"
-        puts "Of file: #{path}"
-        puts "Found and replaced: '.#{from}' with '.#{to}'"
+        puts "==>   Success! Tests PASSED"
         puts
 
-        puts "Specs passed with using *line* strategy:"
-        puts "  bundle exec rspec #{relative_file_path}:#{line_number}"
+        puts "==> Tests passed with using *line* strategy:"
+        puts "==>   bundle exec rspec #{relative_file_path}:#{line_number}"
         puts
 
         message = "[TCR] Replace .#{from} with .#{to} in #{relative_file_path}:#{line_number}"
-        puts "Committing change with message:"
-        puts "  #{message}"
+        puts "==> Committing change with message:"
+        puts "==>   #{message}"
         puts
         `git commit -am "#{message}"`
+        puts
 
         # puts "TODO: print output"
         # puts "TODO: git commit unless no_git?"

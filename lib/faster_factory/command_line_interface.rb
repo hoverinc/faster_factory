@@ -7,13 +7,13 @@ module FasterFactory
     def initialize cli_args
       # Special case for `faster_factory help`:
       # Avoid running on spec/ or test/ when asked for help text
-      @cli_args = ['-h'] if @cli_args.first == 'help'
+      cli_args = ['-h'] if cli_args.first == 'help'
 
       # Parse CLI options
-      @options = FasterFactory::CLI::Options.new @cli_args
+      @options = FasterFactory::CLI::Options.new cli_args
 
       # Build list of files to work on
-      @files = FasterFactory::CLI::Files.new @cli_args
+      @files = FasterFactory::CLI::Files.new cli_args
     end
 
     def start
@@ -25,61 +25,71 @@ module FasterFactory
 
         lines = []
 
-        File.readlines(path).each do |line|
-          create_present = line =~ /FactoryBot.create/
-          build_present  = line =~ /FactoryBot.build/
-
-          lines << {
-            original_content: line,
-            create_present: create_present,
-            build_present: build_present,
-            new_content: nil
-          }
+        File.readlines(path).each do |file_line|
+          lines << FasterFactory::Line.new(file_line)
         end
 
         lines.each_with_index do |line, index|
-          unless line[:build_present].nil?
-            puts "'FactoryBot.create' found on line: #{index + 1}"
-            line[:new_content] = line[:original_content].sub('FactoryBot.create', 'FactoryBot.build')
-            puts "Replaced 'FactoryBot.build' with 'FactoryBot.create'"
+          line_number = index + 1
 
-            content = lines.map { |l| l[:new_content] || l[:original_content] }.join
+          if line.create_present?
+            puts "'.create' found on line: #{line_number}"
+            line.replace_create_with_build!
+            puts "Replaced '.create' with '.build'"
 
-            File.write(path, content)
-            puts "*"*80
-            puts "Running RSpec"
-            rspec_command = "bundle exec rspec #{path}:#{index + 1}"
-            rspec_output = `#{rspec_command}`
-            puts "*"*80
+            content = lines.map(&:content).join
 
-            if rspec_output =~ /Failures:/
-              puts "SPECS FAILED"
-              `git reset --hard`
-            else
-              puts "Success!"
-              puts "On line: #{index + 1}"
-              puts "Of file: #{path}"
-              puts "Found and replaced: 'FactoryBot.create' with 'FactoryBot.build'"
-              puts
-
-              puts "Specs passed with using *line* strategy:"
-              puts "  bundle exec rspec #{relative_file_path}:#{index + 1}"
-              puts
-
-              message = "[TCR] Replace FactoryBot.create with FactoryBot.build in #{relative_file_path}"
-              puts "Committing change with message:"
-              puts "  #{message}"
-              puts
-              `git commit -am "#{message}"`
-
-              # puts "TODO: print output"
-              # puts "TODO: git commit unless no_git?"
-            end
+            tcr! path: path, content: content, line_number: line_number, from: 'create', to: 'build'
           end
 
-          unless line[:build_present].nil?
+          if line.build_present?
+            puts "'.build' found on line: #{line_number}"
+            line.replace_build_with_build_stubbed!
+            puts "Replaced '.build' with '.build_stubbed'"
+
+            content = lines.map(&:content).join
+
+            tcr! path: path, content: content, line_number: line_number, from: 'build', to: 'build_stubbed'
           end
         end
+      end
+    end
+
+    def tcr! path:, content:, line_number:, from:, to:
+      # TEMP
+      relative_file_path = path.sub "#{Dir.pwd}/", ''
+
+      File.write(path, content)
+      puts "*"*80
+      puts "Running RSpec"
+      rspec_command = "bundle exec rspec #{path}:#{line_number}"
+      rspec_output = `#{rspec_command}`
+      puts "*"*80
+
+      if rspec_output =~ /Failures:/
+        puts "SPECS FAILED"
+        puts "Resetting changes back to working state"
+        `git reset --hard`
+        puts "*"*80
+      else
+        puts "Success!"
+        puts "On line: #{line_number}"
+        puts "Of file: #{path}"
+        puts "Found and replaced: '.#{from}' with '.#{to}'"
+        puts
+
+        puts "Specs passed with using *line* strategy:"
+        puts "  bundle exec rspec #{relative_file_path}:#{line_number}"
+        puts
+
+        message = "[TCR] Replace .#{from} with .#{to} in #{relative_file_path}:#{line_number}"
+        puts "Committing change with message:"
+        puts "  #{message}"
+        puts
+        `git commit -am "#{message}"`
+
+        # puts "TODO: print output"
+        # puts "TODO: git commit unless no_git?"
       end
     end
   end

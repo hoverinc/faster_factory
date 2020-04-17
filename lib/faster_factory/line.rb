@@ -25,5 +25,9 @@ module FasterFactory
     def replace_create_with_build!
       @content = @original_content.sub('.create', '.build')
     end
+
+    def replace_build_with_build_stubbed!
+      @content = @original_content.sub('.build', '.build_stubbed')
+    end
   end
 end

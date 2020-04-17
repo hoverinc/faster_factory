@@ -12,6 +12,11 @@ module FasterFactory
       !match.nil?
     end
 
+    def build_stubbed_present?
+      match = @content =~ %r{\.build_stubbed}
+      !match.nil?
+    end
+
     def create_present?
       match = @content =~ %r{\.create}
       !match.nil?

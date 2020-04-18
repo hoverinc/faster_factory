@@ -1,22 +1,22 @@
 module FasterFactory
   class TestFile
-    def initialize file_path
-      @file_path = file_path
-      clean_file_path!
+    def initialize path
+      @path = path
+      clean_path!
     end
 
     def absolute_path
-      [Dir.pwd, @file_path].join '/'
+      [Dir.pwd, @path].join '/'
     end
 
     private
 
     def read_file
-      ::File.read @file_path
+      ::File.read @path
     end
 
-    def clean_file_path!
-      @file_path = @file_path[1..-1] if @file_path.start_with? '/'
+    def clean_path!
+      @path = @path[1..-1] if @path.start_with? '/'
     end
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe FasterFactory::TestFile do
     expect(file).to_not be_nil
   end
 
-  describe "#path" do
+  describe "#absolute_path" do
     it "calculates its absolute file path" do
       example_spec_file = FasterFactory::TestFile.new "spec/examples/example_spec_file.rb"
 

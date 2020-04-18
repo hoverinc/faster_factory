@@ -20,7 +20,6 @@ module FasterFactory
 
       # Build set of files to work on
       @file_set = FasterFactory::CLI::FileSet.new @cli_args
-      binding.irb
     end
 
     def start

@@ -1,5 +1,7 @@
 module FasterFactory
   class TestFile
+    attr_reader :path
+
     def initialize path
       @path = path
       clean_path!
@@ -16,7 +18,7 @@ module FasterFactory
     end
 
     def clean_path!
-      @path = @path[1..-1] if @path.start_with? '/'
+      @path.sub! %r{\A/+}, ''
     end
   end
 end

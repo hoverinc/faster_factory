@@ -12,4 +12,24 @@ RSpec.describe FasterFactory::TestFile do
       expect(example_spec_file.absolute_path).to eq "#{Dir.pwd}/spec/examples/example_spec_file.rb"
     end
   end
+
+  describe "#path" do
+    it "uses the initialization argument" do
+      example_spec_file = FasterFactory::TestFile.new "spec/examples/example_spec_file.rb"
+
+      expect(example_spec_file.path).to eq "spec/examples/example_spec_file.rb"
+    end
+
+    it "trims leading slash" do
+      example_spec_file = FasterFactory::TestFile.new "/spec/examples/example_spec_file.rb"
+
+      expect(example_spec_file.path).to eq "spec/examples/example_spec_file.rb"
+    end
+
+    it "trims leading slashes" do
+      example_spec_file = FasterFactory::TestFile.new "///////spec/examples/example_spec_file.rb"
+
+      expect(example_spec_file.path).to eq "spec/examples/example_spec_file.rb"
+    end
+  end
 end

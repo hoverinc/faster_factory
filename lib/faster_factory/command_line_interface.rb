@@ -34,42 +34,40 @@ module FasterFactory
           line_number = index + 1
 
           # TEMP: un-DRY duplication
-
           if line.create_present?
             puts "==>   Found '.create' on line: #{line_number}"
             puts "==>   Replacing '.create' with '.build_stubbed'…"
+
             line.replace_create_with_build_stubbed!
+            File.write file.path, lines.map(&:content).join
 
-            content = lines.map(&:content).join
-
-            tcr! path: file.path, content: content, line_number: line_number, from: 'create', to: 'build_stubbed'
+            tcr! path: file.path, line_number: line_number, from: 'create', to: 'build_stubbed'
           end
 
           if line.create_present?
             puts "==>   Found '.create' on line: #{line_number}"
             puts "==>   Replacing '.create' with '.build'…"
+
             line.replace_create_with_build!
+            File.write file.path, lines.map(&:content).join
 
-            content = lines.map(&:content).join
-
-            tcr! path: file.path, content: content, line_number: line_number, from: 'create', to: 'build'
+            tcr! path: file.path, line_number: line_number, from: 'create', to: 'build'
           end
 
           if line.build_present?
             puts "==>   Found '.build' on line: #{line_number}"
             puts "==>   Replacing '.build' with '.build_stubbed'…"
+
             line.replace_build_with_build_stubbed!
+            File.write file.path, lines.map(&:content).join
 
-            content = lines.map(&:content).join
-
-            tcr! path: file.path, content: content, line_number: line_number, from: 'build', to: 'build_stubbed'
+            tcr! path: file.path, line_number: line_number, from: 'build', to: 'build_stubbed'
           end
         end
       end
     end
 
-    def tcr! path:, content:, line_number:, from:, to:
-      File.write(path, content)
+    def tcr! path:, line_number:, from:, to:
       puts
       puts "==> Running Tests…"
       rspec_command = "bundle exec rspec #{path}:#{line_number}"

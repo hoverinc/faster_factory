@@ -11,6 +11,10 @@ module FasterFactory
       [Dir.pwd, @path].join '/'
     end
 
+    def content
+      ::File.read(absolute_path)
+    end
+
     private
 
     def read_file

@@ -32,4 +32,26 @@ RSpec.describe FasterFactory::TestFile do
       expect(example_spec_file.path).to eq "spec/examples/example_spec_file.rb"
     end
   end
+
+  describe "#content" do
+    it "reads a file’s contents" do
+      example_spec_file = FasterFactory::TestFile.new "spec/examples/example_spec_file.rb"
+
+      content = <<~CONTENT
+        require 'rails_helper'
+
+        describe(User) do
+          describe('do things') do
+            let(:user) { FactoryBot.build(:user) }
+
+            it('does stuff and things') do
+              expect(true).to be true
+            end
+          end
+        end
+      CONTENT
+
+      expect(example_spec_file.content).to eq content
+    end
+  end
 end

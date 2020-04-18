@@ -4,4 +4,12 @@ RSpec.describe FasterFactory::File do
 
     expect(file).to_not be_nil
   end
+
+  describe "#path" do
+    it "calculates its absolute file path" do
+      example_spec_file = FasterFactory::File.new "spec/examples/example_spec_file.rb"
+
+      expect(example_spec_file.path).to eq "spec/examples/example_spec_file.rb"
+    end
+  end
 end

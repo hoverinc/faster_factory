@@ -11,10 +11,6 @@ module FasterFactory
       [Dir.pwd, @path].join '/'
     end
 
-    def content
-      ::File.read(absolute_path)
-    end
-
     def lines
       ::File.readlines(absolute_path).map do |line_content|
         FasterFactory::Line.new line_content

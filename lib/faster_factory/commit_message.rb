@@ -10,6 +10,8 @@ module FasterFactory
 
     def content
       return default_content if @template.nil?
+
+      @template
     end
 
     private

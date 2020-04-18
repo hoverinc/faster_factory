@@ -17,7 +17,16 @@ RSpec.describe FasterFactory::CommitMessage do
 
   describe "#content" do
     context "with no 'template' argument" do
-      it "returns a default value  asdfasdf" do
+      it "returns the template value" do
+        init_args = { from: 'create', to: 'build', path: "path/to/file.rb", line_number: 37, template: "Lorem ipsum" }
+        commit_message = FasterFactory::CommitMessage.new init_args
+
+        expect(commit_message.content).to eq "Lorem ipsum"
+      end
+    end
+
+    context "with no 'template' argument" do
+      it "returns a default value" do
         init_args = { from: 'create', to: 'build', path: "path/to/file.rb", line_number: 37 }
         commit_message = FasterFactory::CommitMessage.new init_args
 

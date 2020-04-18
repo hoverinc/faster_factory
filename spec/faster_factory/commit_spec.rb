@@ -15,13 +15,13 @@ RSpec.describe FasterFactory::Commit do
     end
   end
 
-  describe "#content" do
+  describe "#message" do
     context "with no 'template' argument" do
       it "returns the template value" do
         init_args = { from: 'create', to: 'build', path: "path/to/file.rb", line_number: 37, template: "Lorem ipsum" }
         commit = FasterFactory::Commit.new init_args
 
-        expect(commit.content).to eq "Lorem ipsum"
+        expect(commit.message).to eq "Lorem ipsum"
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe FasterFactory::Commit do
         init_args = { from: 'create', to: 'build', path: "path/to/file.rb", line_number: 37 }
         commit = FasterFactory::Commit.new init_args
 
-        expect(commit.content).to eq "[TCR] Replace 'create' with 'build' in path/to/file.rb:37"
+        expect(commit.message).to eq "[TCR] Replace 'create' with 'build' in path/to/file.rb:37"
       end
     end
   end

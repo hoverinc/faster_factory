@@ -8,15 +8,15 @@ module FasterFactory
       @template    = template
     end
 
-    def content
-      return default_content if @template.nil?
+    def message
+      return default_message if @template.nil?
 
       @template
     end
 
     private
 
-    def default_content
+    def default_message
       "[TCR] Replace '#{@from}' with '#{@to}' in #{@path}:#{@line_number}"
     end
   end

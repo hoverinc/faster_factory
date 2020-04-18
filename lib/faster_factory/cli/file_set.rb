@@ -2,12 +2,16 @@ require 'faster_factory/file_path'
 
 module FasterFactory
   module CLI
-    class Files
+    class FileSet
       attr_accessor :paths
 
       def initialize files
         @files_arg = files
         setup!
+      end
+
+      def all
+        @paths.map { |path| FasterFactory::TestFile.new path }
       end
 
       private

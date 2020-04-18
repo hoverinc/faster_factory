@@ -1,6 +1,6 @@
 require 'optparse'
 require 'faster_factory/cli/options'
-require 'faster_factory/cli/files'
+require 'faster_factory/cli/file_set'
 
 module FasterFactory
   class CommandLineInterface
@@ -19,7 +19,8 @@ module FasterFactory
       @options = FasterFactory::CLI::Options.new @cli_args
 
       # Build list of files to work on
-      @files = FasterFactory::CLI::Files.new @cli_args
+      @files = FasterFactory::CLI::FileSet.new @cli_args
+      binding.irb
     end
 
     def start

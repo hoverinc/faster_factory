@@ -1,14 +1,15 @@
 module FasterFactory
   class TestFile
-    attr_reader :path
-
     def initialize path
-      @path = path
-      clean_path!
+      @path = strip_leading_slashes path
     end
 
     def absolute_path
       [Dir.pwd, @path].join '/'
+    end
+
+    def path
+      strip_leading_slashes absolute_path.gsub(Dir.pwd, '')
     end
 
     def lines
@@ -23,8 +24,8 @@ module FasterFactory
       ::File.read @path
     end
 
-    def clean_path!
-      @path.sub! %r{\A/+}, ''
+    def strip_leading_slashes path
+      path = path.sub %r{\A/+}, ''
     end
   end
 end

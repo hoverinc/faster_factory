@@ -1,6 +1,7 @@
 require 'optparse'
 require 'faster_factory/cli/options'
 require 'faster_factory/cli/file_set'
+require 'faster_factory/commit_message'
 
 module FasterFactory
   class CommandLineInterface
@@ -41,6 +42,9 @@ module FasterFactory
             line.replace_create_with_build_stubbed!
             File.write file.path, lines.map(&:content).join
 
+            # puts "git diff:"
+            # puts `git diff`
+
             tcr! path: file.path, line_number: line_number, from: 'create', to: 'build_stubbed'
           end
 
@@ -51,6 +55,9 @@ module FasterFactory
             line.replace_create_with_build!
             File.write file.path, lines.map(&:content).join
 
+            # puts "git diff:"
+            # puts `git diff`
+
             tcr! path: file.path, line_number: line_number, from: 'create', to: 'build'
           end
 
@@ -60,6 +67,9 @@ module FasterFactory
 
             line.replace_build_with_build_stubbed!
             File.write file.path, lines.map(&:content).join
+
+            # puts "git diff:"
+            # puts `git diff`
 
             tcr! path: file.path, line_number: line_number, from: 'build', to: 'build_stubbed'
           end
@@ -87,11 +97,12 @@ module FasterFactory
         puts "==>   bundle exec rspec #{path}:#{line_number}"
         puts
 
-        message = "[TCR] Replace .#{from} with .#{to} in #{path}:#{line_number}"
+        commit_message = FasterFactory::CommitMessage.new from: from, to: to, path: path, line_number: line_number
+
         puts "==> Committing change with message:"
-        puts "==>   #{message}"
+        puts "==>   #{commit_message}"
         puts
-        `git commit -am "#{message}"`
+        `git commit -am "#{commit_message.content}"`
         puts
 
         # puts "TODO: print output"

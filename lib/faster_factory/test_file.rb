@@ -1,7 +1,7 @@
 module FasterFactory
   class TestFile
     def initialize path
-      @path = strip_leading_slashes path
+      @path = strip_absolute_path_prefix path
     end
 
     def absolute_path
@@ -9,7 +9,7 @@ module FasterFactory
     end
 
     def path
-      strip_leading_slashes absolute_path.gsub(Dir.pwd, '')
+      strip_leading_slashes @path
     end
 
     def lines
@@ -26,6 +26,11 @@ module FasterFactory
 
     def strip_leading_slashes path
       path = path.sub %r{\A/+}, ''
+    end
+
+    def strip_absolute_path_prefix path
+      absolute = "/#{path}".gsub Dir.pwd, ''
+      strip_leading_slashes absolute
     end
   end
 end

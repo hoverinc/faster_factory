@@ -1,5 +1,5 @@
 module FasterFactory
-  class CommitMessage
+  class Commit
     def initialize from:, to:, path:, line_number:, template: nil
       @from        = from
       @to          = to

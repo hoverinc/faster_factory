@@ -1,7 +1,6 @@
 require 'optparse'
 require 'faster_factory/cli/options'
 require 'faster_factory/cli/file_set'
-require 'faster_factory/commit_message'
 
 module FasterFactory
   class CommandLineInterface
@@ -88,12 +87,12 @@ module FasterFactory
         puts "==>   bundle exec rspec #{path}:#{line_number}"
         puts
 
-        commit_message = FasterFactory::CommitMessage.new from: from, to: to, path: path, line_number: line_number
+        commit = FasterFactory::Commit.new from: from, to: to, path: path, line_number: line_number
 
         puts "==> Committing change with message:"
-        puts "==>   #{commit_message.content}"
+        puts "==>   #{commit.content}"
         puts
-        `git commit -am "#{commit_message.content}"`
+        `git commit -am "#{commit.content}"`
         puts
 
         # puts "TODO: print output"

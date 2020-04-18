@@ -14,6 +14,13 @@ module FasterFactory
       @template
     end
 
+    def commit
+      puts "==> Committing change with message:"
+      puts "==>   #{message}"
+      puts
+      `git commit -am "#{message}"`
+    end
+
     private
 
     def default_message

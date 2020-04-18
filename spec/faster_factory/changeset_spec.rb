@@ -34,4 +34,14 @@ RSpec.describe FasterFactory::Changeset do
       end
     end
   end
+
+  describe "#commit" do
+    it "commits the current changes" do
+      init_args = { from: 'create', to: 'build', path: "path/to/file.rb", line_number: 37 }
+      changeset = FasterFactory::Changeset.new init_args
+
+      # TODO: I don't know how to test this
+      # expect(changeset.commit).to ...
+    end
+  end
 end

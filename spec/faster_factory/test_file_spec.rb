@@ -54,4 +54,13 @@ RSpec.describe FasterFactory::TestFile do
       expect(example_spec_file.content).to eq content
     end
   end
+
+  describe "#lines" do
+    it "converts a file’s contents into an array of Line objects" do
+      example_spec_file = FasterFactory::TestFile.new "spec/examples/example_spec_file.rb"
+      line_classes      = example_spec_file.lines.map(&:class).uniq
+
+      expect(line_classes).to eq [FasterFactory::Line]
+    end
+  end
 end

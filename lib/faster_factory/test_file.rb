@@ -15,6 +15,12 @@ module FasterFactory
       ::File.read(absolute_path)
     end
 
+    def lines
+      ::File.readlines(absolute_path).map do |line_content|
+        FasterFactory::Line.new line_content
+      end
+    end
+
     private
 
     def read_file

@@ -18,15 +18,15 @@ module FasterFactory
       # Parse CLI options
       @options = FasterFactory::CLI::Options.new @cli_args
 
-      # Build list of files to work on
-      @files = FasterFactory::CLI::FileSet.new @cli_args
+      # Build set of files to work on
+      @file_set = FasterFactory::CLI::FileSet.new @cli_args
       binding.irb
     end
 
     def start
       # TEMP sketch
       puts '==> Reading files…'
-      @files.paths.each do |path|
+      @file_set.paths.each do |path|
         relative_file_path = path.sub "#{Dir.pwd}/", ''
         puts "==> Reading: #{relative_file_path}"
 

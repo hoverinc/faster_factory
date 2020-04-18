@@ -25,15 +25,10 @@ module FasterFactory
     def start
       # TEMP sketch
       puts '==> Reading files…'
-      @file_set.paths.each do |path|
-        relative_file_path = path.sub "#{Dir.pwd}/", ''
-        puts "==> Reading: #{relative_file_path}"
+      @file_set.all.each do |file|
+        puts "==> Reading: #{file.path}"
 
-        lines = []
-
-        File.readlines(path).each do |file_line|
-          lines << FasterFactory::Line.new(file_line)
-        end
+        lines = file.lines
 
         lines.each_with_index do |line, index|
           line_number = index + 1
@@ -47,7 +42,7 @@ module FasterFactory
 
             content = lines.map(&:content).join
 
-            tcr! path: path, content: content, line_number: line_number, from: 'create', to: 'build_stubbed'
+            tcr! path: file.path, content: content, line_number: line_number, from: 'create', to: 'build_stubbed'
           end
 
           if line.create_present?
@@ -57,7 +52,7 @@ module FasterFactory
 
             content = lines.map(&:content).join
 
-            tcr! path: path, content: content, line_number: line_number, from: 'create', to: 'build'
+            tcr! path: file.path, content: content, line_number: line_number, from: 'create', to: 'build'
           end
 
           if line.build_present?
@@ -67,16 +62,13 @@ module FasterFactory
 
             content = lines.map(&:content).join
 
-            tcr! path: path, content: content, line_number: line_number, from: 'build', to: 'build_stubbed'
+            tcr! path: file.path, content: content, line_number: line_number, from: 'build', to: 'build_stubbed'
           end
         end
       end
     end
 
     def tcr! path:, content:, line_number:, from:, to:
-      # TEMP
-      relative_file_path = path.sub "#{Dir.pwd}/", ''
-
       File.write(path, content)
       puts
       puts "==> Running Tests…"
@@ -94,10 +86,10 @@ module FasterFactory
         puts
 
         puts "==> Tests passed with using *line* strategy:"
-        puts "==>   bundle exec rspec #{relative_file_path}:#{line_number}"
+        puts "==>   bundle exec rspec #{path}:#{line_number}"
         puts
 
-        message = "[TCR] Replace .#{from} with .#{to} in #{relative_file_path}:#{line_number}"
+        message = "[TCR] Replace .#{from} with .#{to} in #{path}:#{line_number}"
         puts "==> Committing change with message:"
         puts "==>   #{message}"
         puts

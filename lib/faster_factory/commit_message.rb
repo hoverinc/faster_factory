@@ -1,7 +1,8 @@
 module FasterFactory
   class CommitMessage
-    def initialize message_template
-
+    def initialize path:, line_number:
+      @path = path
+      @line_number = line_number
     end
   end
 end

@@ -91,7 +91,7 @@ module FasterFactory
         commit_message = FasterFactory::CommitMessage.new from: from, to: to, path: path, line_number: line_number
 
         puts "==> Committing change with message:"
-        puts "==>   #{commit_message}"
+        puts "==>   #{commit_message.content}"
         puts
         `git commit -am "#{commit_message.content}"`
         puts

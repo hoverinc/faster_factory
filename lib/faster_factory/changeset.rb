@@ -1,5 +1,5 @@
 module FasterFactory
-  class Commit
+  class Changeset
     def initialize from:, to:, path:, line_number:, template: nil
       @from        = from
       @to          = to

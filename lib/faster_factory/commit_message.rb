@@ -9,7 +9,13 @@ module FasterFactory
     end
 
     def content
-      "[TCR] Replace .build with .build_stubbed in #{@path}:#{@line_number}"
+      return default_content if @template.nil?
+    end
+
+    private
+
+    def default_content
+      "[TCR] Replace '#{@from}' with '#{@to}' in #{@path}:#{@line_number}"
     end
   end
 end

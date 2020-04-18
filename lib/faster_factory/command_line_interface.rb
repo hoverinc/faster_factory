@@ -42,9 +42,6 @@ module FasterFactory
             line.replace_create_with_build_stubbed!
             File.write file.path, lines.map(&:content).join
 
-            # puts "git diff:"
-            # puts `git diff`
-
             tcr! path: file.path, line_number: line_number, from: 'create', to: 'build_stubbed'
           end
 
@@ -55,9 +52,6 @@ module FasterFactory
             line.replace_create_with_build!
             File.write file.path, lines.map(&:content).join
 
-            # puts "git diff:"
-            # puts `git diff`
-
             tcr! path: file.path, line_number: line_number, from: 'create', to: 'build'
           end
 
@@ -67,9 +61,6 @@ module FasterFactory
 
             line.replace_build_with_build_stubbed!
             File.write file.path, lines.map(&:content).join
-
-            # puts "git diff:"
-            # puts `git diff`
 
             tcr! path: file.path, line_number: line_number, from: 'build', to: 'build_stubbed'
           end

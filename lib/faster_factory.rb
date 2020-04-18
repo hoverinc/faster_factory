@@ -1,7 +1,7 @@
 require 'faster_factory/version'
 require 'faster_factory/command_line_interface'
 require 'faster_factory/line'
-require 'faster_factory/file'
+require 'faster_factory/test_file'
 
 module FasterFactory
   class Error < StandardError; end

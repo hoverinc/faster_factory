@@ -1,6 +1,6 @@
-RSpec.describe FasterFactory::File do
+RSpec.describe FasterFactory::TestFile do
   it "requires an initialization argument" do
-    file = FasterFactory::TestFile.new "path/to/file.rb"
+    file = FasterFactory::TestFile.new "spec/examples/example_spec_file.rb"
 
     expect(file).to_not be_nil
   end
@@ -9,7 +9,7 @@ RSpec.describe FasterFactory::File do
     it "calculates its absolute file path" do
       example_spec_file = FasterFactory::TestFile.new "spec/examples/example_spec_file.rb"
 
-      expect(example_spec_file.path).to eq "spec/examples/example_spec_file.rb"
+      expect(example_spec_file.absolute_path).to eq "spec/examples/example_spec_file.rb"
     end
   end
 end

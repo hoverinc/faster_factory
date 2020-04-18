@@ -19,6 +19,7 @@ module FasterFactory
       puts "==>   #{message}"
       puts
       `git commit -am "#{message}"`
+      puts
     end
 
     private

@@ -87,13 +87,7 @@ module FasterFactory
         puts "==>   bundle exec rspec #{path}:#{line_number}"
         puts
 
-        changeset = FasterFactory::Changeset.new from: from, to: to, path: path, line_number: line_number
-
-        puts "==> Committing change with message:"
-        puts "==>   #{changeset.message}"
-        puts
-        `git commit -am "#{changeset.message}"`
-        puts
+        FasterFactory::Changeset.new(from: from, to: to, path: path, line_number: line_number).commit
 
         # puts "TODO: print output"
         # puts "TODO: git commit unless no_git?"

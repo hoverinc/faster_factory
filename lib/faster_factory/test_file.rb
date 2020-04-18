@@ -1,5 +1,5 @@
 module FasterFactory
-  class File
+  class TestFile
     def initialize file_path
       @file_path    = file_path
       @file_handler = read_file

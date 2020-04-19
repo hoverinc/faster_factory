@@ -45,7 +45,9 @@ module FasterFactory
     def replace_build_with_build_stubbed!
       mapping = {
         '.build ' => '.build_stubbed ',
-        '.build(' => '.build_stubbed('
+        '.build(' => '.build_stubbed(',
+        'build ' => 'build_stubbed ',
+        'build(' => 'build_stubbed('
       }
 
       mapping.each { |from, to| @content.sub! from, to }

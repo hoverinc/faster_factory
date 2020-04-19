@@ -108,4 +108,18 @@ RSpec.describe FasterFactory::Line do
       expect(line.content).to eq line_with_build_stubbed
     end
   end
+
+  describe "#replace_create_with_build_stubbed! and #replace_build_with_build_stubbed! combined" do
+    it "avoids duplicate '_stubbed' suffixes" do
+      line_with_create        = "let(:user) { FactoryBot.create(:user) }"
+      line_with_build_stubbed = "let(:user) { FactoryBot.build_stubbed(:user) }"
+
+      line = FasterFactory::Line.new line_with_create
+
+      line.replace_create_with_build_stubbed!
+      line.replace_build_with_build_stubbed!
+
+      expect(line.content).to eq line_with_build_stubbed
+    end
+  end
 end

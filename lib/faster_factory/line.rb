@@ -22,19 +22,21 @@ module FasterFactory
       !match.nil?
     end
 
-    let(:user) { FactoryBot.build(:user) }
-
-
     def replace_create_with_build_stubbed!
-      @content = @original_content.sub '.create', '.build_stubbed'
+      @content.sub! '.create', '.build_stubbed'
     end
 
     def replace_create_with_build!
-      @content = @original_content.sub '.create', '.build'
+      @content.sub! '.create', '.build'
     end
 
     def replace_build_with_build_stubbed!
-      @content = @original_content.sub '.build', '.build_stubbed'
+      mapping = {
+        '.build ' => '.build_stubbed ',
+        '.build(' => '.build_stubbed('
+      }
+
+      mapping.each { |from, to| @content.sub! from, to }
     end
   end
 end

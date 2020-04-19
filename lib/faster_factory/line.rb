@@ -23,11 +23,19 @@ module FasterFactory
     end
 
     def replace_create_with_build_stubbed!
-      @content.sub! '.create', '.build_stubbed'
+      mapping = {
+        '.create' => '.build_stubbed'
+      }
+
+      mapping.each { |from, to| @content.sub! from, to }
     end
 
     def replace_create_with_build!
-      @content.sub! '.create', '.build'
+      mapping = {
+        '.create' => '.build'
+      }
+
+      mapping.each { |from, to| @content.sub! from, to }
     end
 
     def replace_build_with_build_stubbed!

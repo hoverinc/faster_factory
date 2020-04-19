@@ -24,7 +24,9 @@ module FasterFactory
 
     def replace_create_with_build_stubbed!
       mapping = {
-        '.create' => '.build_stubbed'
+        '.create' => '.build_stubbed',
+        'create ' => 'build_stubbed ',
+        'create(' => 'build_stubbed('
       }
 
       mapping.each { |from, to| @content.sub! from, to }

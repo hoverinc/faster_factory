@@ -108,16 +108,4 @@ RSpec.describe FasterFactory::Line do
       expect(line.content).to eq line_with_build_stubbed
     end
   end
-
-  describe "#reset_content!" do
-    it "resets #content back to its original value" do
-      line_with_build = "let(:user) { FactoryBot.build(:user) }"
-
-      line = FasterFactory::Line.new line_with_build
-      line.replace_build_with_build_stubbed!
-      line.reset_content!
-
-      expect(line.content).to eq line.original_content
-    end
-  end
 end

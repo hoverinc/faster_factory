@@ -22,6 +22,9 @@ module FasterFactory
       !match.nil?
     end
 
+    let(:user) { FactoryBot.build(:user) }
+
+
     def replace_create_with_build_stubbed!
       @content = @original_content.sub '.create', '.build_stubbed'
     end
@@ -32,10 +35,6 @@ module FasterFactory
 
     def replace_build_with_build_stubbed!
       @content = @original_content.sub '.build', '.build_stubbed'
-    end
-
-    def reset_content!
-      @content = @original_content
     end
   end
 end

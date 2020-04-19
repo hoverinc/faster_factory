@@ -34,7 +34,9 @@ module FasterFactory
 
     def replace_create_with_build!
       mapping = {
-        '.create' => '.build'
+        '.create' => '.build',
+        'create ' => 'build ',
+        'create(' => 'build('
       }
 
       mapping.each { |from, to| @content.sub! from, to }

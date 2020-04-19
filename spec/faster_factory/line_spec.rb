@@ -115,6 +115,26 @@ RSpec.describe FasterFactory::Line do
 
       expect(line.content).to eq line_with_build
     end
+
+    it "replaces 'create ' with 'build ' in #content" do
+      line_with_create = "let(:user) { create :user }"
+      line_with_build  = "let(:user) { build :user }"
+
+      line = FasterFactory::Line.new line_with_create
+      line.replace_create_with_build!
+
+      expect(line.content).to eq line_with_build
+    end
+
+    it "replaces 'create(' with 'build(' in #content" do
+      line_with_create = "let(:user) { create(:user) }"
+      line_with_build  = "let(:user) { build(:user) }"
+
+      line = FasterFactory::Line.new line_with_create
+      line.replace_create_with_build!
+
+      expect(line.content).to eq line_with_build
+    end
   end
 
   describe "#replace_build_with_build_stubbed!" do

@@ -70,8 +70,11 @@ module FasterFactory
     def tcr! path:, line_number:, from:, to:
       puts
       puts "==> Running Tests…"
-      rspec_command = "bundle exec rspec #{path}:#{line_number}"
-      rspec_output = `#{rspec_command}`
+      rspec_command_with_line_strategry = "bundle exec rspec #{path}:#{line_number}"
+      rspec_command_with_file_strategry = "bundle exec rspec #{path}"
+      rspec_command_with_all_strategry  = "bundle exec rspec"
+
+      rspec_output = `#{rspec_command_with_all_strategry}`
 
       if rspec_output =~ /Failures:/
         puts "==>   Tests FAILED"

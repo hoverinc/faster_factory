@@ -73,6 +73,8 @@ auto-correcting and committing the changes that succeed.
 faster_factory path/to/folder/or/file
 ```
 
+**TODO**
+
 Run _Faster Factory_ with a custom git commit message.
 The default commit message are:
 
@@ -82,6 +84,8 @@ The default commit message are:
 ```
 faster_factory --message "Makes {{file}} tests run faaaaster"
 ```
+
+**TODO**
 
 Run _Faster Factory_ with a different test strategy.
 By default, _Faster Factory_ only runs the localized test around the change.
@@ -104,9 +108,13 @@ faster_factory --strategy file,all
 
 Run _Faster Factory_ without committing successful changes to git.
 
+**TODO**
+
 ```
 faster_factory --no-git
 ```
+
+**TODO**
 
 Run _Faster Factory_ without keeping changes. Instead, generate a report of successful changes.
 
